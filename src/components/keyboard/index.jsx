@@ -67,7 +67,7 @@ const Keyboard = () => {
   const topEdge = ["A", "B", "C", "D", "E", "F"];
   const bottomEdge = ["4", "5", "6", "7", "8", "9"];
 
-  const pressLetter = (operation, letter) => {
+  const pressLetter = (letter) => {
     if (space) {
       setSearch((search) => [...search, " "]);
       return;
@@ -202,7 +202,7 @@ const Keyboard = () => {
   return (
     <section className="wraper-keyboard" id="nav-1">
       <h3 className="search">
-        {search.length > 0 ? search.join("") : "Search"}{" "}
+        {search.length > 0 ? search.join("") : "Search"}
       </h3>
       <ul className="keyboard">
         {ALFANUMBER.map((item, i) => (
