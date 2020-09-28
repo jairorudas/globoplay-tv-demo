@@ -9,9 +9,11 @@ const Item = ({ filme }) => (
 export default ({ id }) => {
   const {
     filmes,
+    findFilme
   } = useContext(AplicationContext);
 
   const [currentNav, setCurrentNav] = useState()
+  const [localFilmes, setLocalFilmes] = useState([])
   let index = 0;
 
   const animateCarousel = (side) => {
@@ -56,7 +58,23 @@ export default ({ id }) => {
     });
   },[]);
 
- 
+  useEffect(() => {
+    if (findFilme) {
+      const result = filmes.filter( (filme) => {
+       const name = filme.show.name
+       if((name.toLowerCase()).includes(findFilme)){
+         return filme
+       }
+      })
+      setLocalFilmes(result)
+      
+      console.log(result, 'RESULT')
+    } else {
+      setLocalFilmes(filmes)
+     }
+  }, [findFilme, filmes])
+
+  
 
  
   // let filme = filmes.find((filme) => filme.show.id === +li.id);
@@ -74,10 +92,10 @@ export default ({ id }) => {
       }
     }
   };
-  
+
   return (<section style={{position: "relative"}}>
     <ul className="horizontal" id={`nav-${id}`}>
-      {filmes.map((el, i) => (
+      {localFilmes.map((el, i) => (
         <li
           key={el.show.id}
           className={`list`}

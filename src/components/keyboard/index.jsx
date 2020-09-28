@@ -8,7 +8,7 @@ const Keyboard = () => {
   const [search, setSearch]  = useState([])
   const [currentLetter, setCurrentLetter] = useState({x: 0, y: 0})
   const {
-    setNameFilme
+    setFindFilme
   } = useContext(AplicationContext);
   const ALFANUMBER = [
     "A",
@@ -169,7 +169,7 @@ const Keyboard = () => {
   useEffect(() => {
     debugger
     const busca = (search.length > 0 ? search.join('') : '').toLowerCase()
-    setNameFilme(busca)
+    setFindFilme(busca)
     console.log(busca);
   }, [search])
 

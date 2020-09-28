@@ -5,7 +5,7 @@ export const AplicationContext = createContext();
 const AplicationProvider = ({ children }) => {
   const [currentFilme, setCurrentFilme] = useState(null);
   const [filmes, setFilmes] = useState([]);
-  const [nameFilme, setNameFilme] = useState('')
+  const [findFilme, setFindFilme] = useState('')
 
   useEffect(() => {
     fetch("http://api.tvmaze.com/search/shows?q=girls").then(async (res) => {
@@ -15,34 +15,14 @@ const AplicationProvider = ({ children }) => {
     });
   }, []);
 
-  const getMainFilmes = () => {
-    if (nameFilme) {
-     filmes.filter( filme => {
-      const name = filme.show.name
-      
-      if((name.toLowerCase()).includes(nameFilme)){
-        return filme
-      }
-      
-     })
-    } else {
-      return filmes
-    }
-  }
-
-  useEffect(() => {
-    console.log(nameFilme, 'Name Filme')
-  }, [nameFilme])
-
   return (
     <AplicationContext.Provider
       value={{
         filmes,
-        nameFilme,
+        findFilme,
         currentFilme,
         setCurrentFilme,
-        setNameFilme,
-        getMainFilmes
+        setFindFilme,
       }}
     >
       {children}
