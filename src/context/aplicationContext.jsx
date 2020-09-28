@@ -5,7 +5,7 @@ export const AplicationContext = createContext();
 const AplicationProvider = ({ children }) => {
   const [currentFilme, setCurrentFilme] = useState(null);
   const [filmes, setFilmes] = useState([]);
-  const [findFilme, setFindFilme] = useState('')
+  const [findFilme, setFindFilme] = useState("");
 
   useEffect(() => {
     fetch("http://api.tvmaze.com/search/shows?q=girls").then(async (res) => {
