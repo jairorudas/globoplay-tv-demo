@@ -17,29 +17,34 @@ export default ({ id }) => {
   let index = 0;
 
   const animateCarousel = (side) => {
+    const currentContainerID = +(localStorage.getItem('currentNav'))
+    setCurrentNav(currentContainerID)
     let NEW_TRANSLATE = null
-    const NODE = document.getElementById(`nav-${id}`);
+    const NODE = document.getElementById(`nav-${currentContainerID}`);
     const LIST = NODE.getElementsByTagName("li");
     const DATA_TRANSFORM = LIST[0].style.transform
-    const value =  (+DATA_TRANSFORM?.slice(DATA_TRANSFORM.length-6, DATA_TRANSFORM.length - 3)) || 90   
+    const value =  (+DATA_TRANSFORM?.slice(DATA_TRANSFORM.length-7, DATA_TRANSFORM.length - 3)) || 90   
     
-    if(side === 'prev') {
-      NEW_TRANSLATE = value - 110
-      
-    for (let item of LIST) {
-      item.style.transform = `translate(calc(210px - ${NEW_TRANSLATE}%))`;
-    }
-  }else {
-      NEW_TRANSLATE = value + 110
+    debugger
+    if(!(index === LIST.length)) {
+      debugger
+      if(side === 'prev') {
+        NEW_TRANSLATE = value - 110
+        
       for (let item of LIST) {
         item.style.transform = `translate(calc(210px - ${NEW_TRANSLATE}%))`;
+      }
+    }else {
+        NEW_TRANSLATE = value + 110
+        for (let item of LIST) {
+          item.style.transform = `translate(calc(210px - ${NEW_TRANSLATE}%))`;
+        }
       }
     }
   }
   
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
-      console.log(localStorage.getItem('currentNav'), 'current nav')
       let currentContainer = +(localStorage.getItem('currentNav'))
       setCurrentNav(currentContainer)
       if(currentContainer === id) {
@@ -52,10 +57,14 @@ export default ({ id }) => {
         }
         
         if (e.key === "ArrowDown") {
-          console.log('down');
+        localStorage.setItem('currentNav', 3)
+        }
+        if (e.key === "ArrowUp") {
+        localStorage.setItem('currentNav', 2)
         }
       }
     });
+      
   },[]);
 
   useEffect(() => {
@@ -74,10 +83,9 @@ export default ({ id }) => {
      }
   }, [findFilme, filmes])
 
-  
-
- 
-  // let filme = filmes.find((filme) => filme.show.id === +li.id);
+  useEffect(() => {
+    console.log(currentNav, 'CUREENT NAV');
+  }, [currentNav])
 
   const goToFilme = (move) => {
     if(move === 'next') {
