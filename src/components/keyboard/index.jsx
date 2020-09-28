@@ -95,8 +95,8 @@ const Keyboard = () => {
 
   const verifyMove = (changeContainerFocus, side) => {
     if(changeContainerFocus && side === 'left') {
-      removeFocus(MATRIZ[currentLetter.x][currentLetter.y], '#000')
       localStorage.setItem('currentNav', 0)
+      removeFocus(MATRIZ[currentLetter.x][currentLetter.y], '#000')
       return
     }
     if(changeContainerFocus && side === 'right') {
@@ -167,7 +167,6 @@ const Keyboard = () => {
   }, [])
 
   useEffect(() => {
-    debugger
     const busca = (search.length > 0 ? search.join('') : '').toLowerCase()
     setFindFilme(busca)
     console.log(busca);
@@ -180,6 +179,10 @@ const Keyboard = () => {
         {ALFANUMBER.map((item, i) => (
           <li key={i} id={item}>{item}</li>
         ))}
+        <div className="large-buttons">
+          <li id="space">Espaço</li>
+          <li id="delete">Apagar</li>
+        </div>
       </ul>
     </section>
   );

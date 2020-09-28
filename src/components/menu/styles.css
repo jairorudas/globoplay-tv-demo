@@ -61,3 +61,18 @@
 .menu-open li {
   justify-content: flex-start;
 }
+
+.large-buttons{
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.large-buttons li {
+  padding: 0 51.5px;
+  border: none!important;
+}
+
+.large-buttons li:first-child{
+  border-right: 2.5px solid #2f2d2d!important;
+}
