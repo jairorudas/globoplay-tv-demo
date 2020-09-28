@@ -10,7 +10,6 @@ const AplicationProvider = ({ children }) => {
   useEffect(() => {
     fetch("http://api.tvmaze.com/search/shows?q=girls").then(async (res) => {
       const filmes = await res.json();
-      console.log(filmes)
       setFilmes(filmes);
     });
   }, []);

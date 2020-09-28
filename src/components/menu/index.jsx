@@ -32,11 +32,6 @@ export default () => {
     })
   }, [])
 
-  useEffect(() => {
-    console.log(itemMenu)
-  }, [itemMenu])
-
-
   return (
     <section id="nav-0">
       <ul className={`fatherList ${currentNav === 0 ? 'menu-open' : ''}`} id="menu">
