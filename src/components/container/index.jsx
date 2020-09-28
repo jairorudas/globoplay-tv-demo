@@ -25,9 +25,7 @@ export default ({ id }) => {
     const DATA_TRANSFORM = LIST[0].style.transform
     const value =  (+DATA_TRANSFORM?.slice(DATA_TRANSFORM.length-7, DATA_TRANSFORM.length - 3)) || 90   
     
-    debugger
     if(!(index === LIST.length)) {
-      debugger
       if(side === 'prev') {
         NEW_TRANSLATE = value - 110
         
@@ -64,7 +62,6 @@ export default ({ id }) => {
         }
       }
     });
-      
   },[]);
 
   useEffect(() => {
@@ -77,15 +74,10 @@ export default ({ id }) => {
       })
       setLocalFilmes(result)
       
-      console.log(result, 'RESULT')
     } else {
       setLocalFilmes(filmes)
      }
   }, [findFilme, filmes])
-
-  useEffect(() => {
-    console.log(currentNav, 'CUREENT NAV');
-  }, [currentNav])
 
   const goToFilme = (move) => {
     if(move === 'next') {

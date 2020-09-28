@@ -6,6 +6,8 @@ import "./styles.css";
 
 const Keyboard = () => {
   const [search, setSearch]  = useState([])
+  const [isSpaceSelected, setSpaceSelected ] = useState(false)
+  const [isDeleteSelected, setDeleteSelected ] = useState(false)
   const [currentLetter, setCurrentLetter] = useState({x: 0, y: 0})
   const {
     setFindFilme
@@ -50,6 +52,8 @@ const Keyboard = () => {
   ];
   let counterX = 0
   let counterY = 0
+  let deleted = false
+  let space = false
 
   const MATRIZ = [
     ['A','B','C','D','E','F'],
@@ -66,14 +70,25 @@ const Keyboard = () => {
   const bottomEdge = ['4', '5', '6', '7', '8', '9']
 
   const pressLetter = (operation, letter) => {
-    operation === 'add' ? 
-    setSearch(search => [...search, letter]) :
-    setSearch(search.slice(0, search.length - 1))
+
+    if(space){
+      setSearch(search => [...search, ' ' ])
+      return
+    }
+    deleted ? 
+    setSearch(search => search.slice(0, search.length - 1)) :
+    setSearch(search => [...search, letter])
+
   }
 
   useEffect(() => {
     paintFocus(MATRIZ[currentLetter.x][currentLetter.y])
   }, [currentLetter])
+
+  useEffect(() => {
+    deleted = isDeleteSelected
+    space = isSpaceSelected
+  }, [isDeleteSelected, isSpaceSelected])
 
 
   const changeKeyboardFocus = (coordinate, side) => {
@@ -96,7 +111,7 @@ const Keyboard = () => {
   const verifyMove = (changeContainerFocus, side) => {
     if(changeContainerFocus && side === 'left') {
       localStorage.setItem('currentNav', 0)
-      removeFocus(MATRIZ[currentLetter.x][currentLetter.y], '#000')
+      removeFocus(MATRIZ[counterX][counterY], '#000')
       return
     }
     if(changeContainerFocus && side === 'right') {
@@ -108,7 +123,25 @@ const Keyboard = () => {
       return
     }
     if(changeContainerFocus && side === 'down') {
+      removeFocus(MATRIZ[counterX][counterY], '#000')
+      if(MATRIZ[counterX][counterY] <= 6) {
+        space = true
+        setSpaceSelected(space)
+      } else {
+        deleted = true
+        setDeleteSelected(deleted)
+      }
       return
+    }
+
+    if(space) {
+      space = false
+      setSpaceSelected(space)
+    }
+
+    if (deleted){
+      deleted = false
+      setDeleteSelected(deleted)
     }
 
     switch (side) {
@@ -121,7 +154,7 @@ const Keyboard = () => {
       case 'down':
         changeKeyboardFocus('x', side)
         break
-      case 'up': 
+      case 'up':
         changeKeyboardFocus('x', side)
         break
       default:
@@ -159,7 +192,7 @@ const Keyboard = () => {
         }
         
       }
-    })
+    }, this)
   }, [])
 
   useEffect(() => {
@@ -180,8 +213,8 @@ const Keyboard = () => {
           <li key={i} id={item}>{item}</li>
         ))}
         <div className="large-buttons">
-          <li id="space">Espaço</li>
-          <li id="delete">Apagar</li>
+          <li id="space" className={`${isSpaceSelected ? 'activeButton' : '' } `} >Espaço</li>
+          <li id="delete" className={`${isDeleteSelected ? 'activeButton' : '' } `}>Apagar</li>
         </div>
       </ul>
     </section>

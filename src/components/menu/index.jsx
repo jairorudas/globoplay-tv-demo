@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import search from "../../assets/search.png";
 import feed from "../../assets/feed.png";
 import market from "../../assets/market.png";
@@ -26,9 +26,7 @@ export default () => {
           if(e.key === 'ArrowUp') {
             setItemMenu(item => item - 1)
           }
-        }
-        debugger
-        
+        }        
       }, 100, this);
       
     })
