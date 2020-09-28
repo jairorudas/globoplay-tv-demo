@@ -10,11 +10,15 @@ function App() {
   return (
     <AplicationProvider>
       <Menu />
-      <section className="">
-        <Keyboard />
+      <section className="main-content">
         <div className="App" style={{ overflow: "hidden" }}>
-          <Container id={0}></Container>
-          <Container id={1}></Container>
+          <Keyboard />
+          <section className="filmes-content">
+            <h4 className="label-carousel">Filmes</h4>
+            <Container id={2}></Container>
+            <h4 className="label-carousel">Series</h4>
+            <Container id={3}></Container>
+          </section>
         </div>
       </section>
     </AplicationProvider>
