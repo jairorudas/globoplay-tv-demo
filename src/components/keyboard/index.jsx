@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { AplicationContext } from "../../context/aplicationContext";
 import paintFocus, {removeFocus} from '../../utils/paintElement'
 
@@ -50,8 +50,8 @@ const Keyboard = () => {
     "8",
     "9",
   ];
-  let counterX = 0
-  let counterY = 0
+  let counterX = useRef(0)
+  let counterY = useRef(0)
   let deleted = false
   let space = false
 
@@ -92,30 +92,30 @@ const Keyboard = () => {
 
 
   const changeKeyboardFocus = (coordinate, side) => {
-    removeFocus(MATRIZ[counterX][counterY], '#000')
+    removeFocus(MATRIZ[counterX.current][counterY.current], '#000')
 
     if(coordinate === 'y' && side === 'right') {
-      setCurrentLetter({x: counterX, y: ++counterY})
+      setCurrentLetter({x: counterX.current, y: ++counterY.current})
     }
     if(coordinate === 'y' && side === 'left'){
-      setCurrentLetter({x: counterX, y: --counterY})
+      setCurrentLetter({x: counterX.current, y: --counterY.current})
     }
     if(coordinate === 'x' && side === 'down'){
-      setCurrentLetter({x: ++counterX,y: counterY })
+      setCurrentLetter({x: ++counterX.current,y: counterY.current })
     }
     if(coordinate === 'x' && side === 'up'){
-      setCurrentLetter({x: --counterX, y: counterY} )
+      setCurrentLetter({x: --counterX.current, y: counterY.current } )
     }
   }
 
   const verifyMove = (changeContainerFocus, side) => {
     if(changeContainerFocus && side === 'left') {
       localStorage.setItem('currentNav', 0)
-      removeFocus(MATRIZ[counterX][counterY], '#000')
+      removeFocus(MATRIZ[counterX.current][counterY.current], '#000')
       return
     }
     if(changeContainerFocus && side === 'right') {
-      removeFocus(MATRIZ[counterX][counterY], '#000')
+      removeFocus(MATRIZ[counterX.current][counterY.current], '#000')
       localStorage.setItem('currentNav', 2)
       return
     }
@@ -123,8 +123,8 @@ const Keyboard = () => {
       return
     }
     if(changeContainerFocus && side === 'down') {
-      removeFocus(MATRIZ[counterX][counterY], '#000')
-      if(MATRIZ[counterX][counterY] <= 6) {
+      removeFocus(MATRIZ[counterX.current][counterY.current], '#000')
+      if(MATRIZ[counterX.current][counterY.current] <= 6) {
         space = true
         setSpaceSelected(space)
       } else {
@@ -166,7 +166,7 @@ const Keyboard = () => {
     document.addEventListener('keydown', (e) => {
       if(+(localStorage.getItem('currentNav')) === 1){
         let changeContainerFocus
-        const currentFoco = MATRIZ[counterX][counterY]
+        const currentFoco = MATRIZ[counterX.current][counterY.current]
         switch (e.key) {
           case 'Enter':
             pressLetter('add', currentFoco)
@@ -202,7 +202,6 @@ const Keyboard = () => {
   useEffect(() => {
     const busca = (search.length > 0 ? search.join('') : '').toLowerCase()
     setFindFilme(busca)
-    console.log(busca);
   }, [search])
 
   return (
